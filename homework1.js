@@ -1,4 +1,6 @@
-function checkURL() {
+// Избавляемся от завиимости с document
+
+function checkURL(documentObj) {
 
     //get the url by removing the hash
     var url = location.hash.replace(/^#/, '');
@@ -13,7 +15,7 @@ function checkURL() {
         var title = ($('nav a[href="' + url + '"]').attr('title'))
 
         // change page title from global var
-        document.title = (title || document.title);
+        documentObj.title = (title || documentObj.title);
         //console.log("page title: " + document.title);
 
         // parse url to jquery
@@ -29,3 +31,11 @@ function checkURL() {
     }
 
 }
+
+
+// Настоящий вызов
+checkURL(document);
+
+// Тестовый вызов
+var fakeDocument = {'title':'Test Title'}
+checkURL(fakeDocument);

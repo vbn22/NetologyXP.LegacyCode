@@ -1,19 +1,21 @@
-function formSetEditReport(idReport) {
+// Избавляемся от зависимости ReportPluginObj
+
+function formSetEditReport(idReport,ReportPluginObj) {
     var report = {
-        'type': ReportPlugin.defaultReportType,
-        'format': ReportPlugin.defaultReportFormat,
+        'type': ReportPluginObj.defaultReportType,
+        'format': ReportPluginObj.defaultReportFormat,
         'description': '',
-        'period': ReportPlugin.defaultPeriod,
-        'hour': ReportPlugin.defaultHour,
+        'period': ReportPluginObj.defaultPeriod,
+        'hour': ReportPluginObj.defaultHour,
         'reports': []
     };
 
     if (idReport > 0) {
-        report = ReportPlugin.reportList[idReport];
-        $('#report_submit').val(ReportPlugin.updateReportString);
+        report = ReportPluginObj.reportList[idReport];
+        $('#report_submit').val(ReportPluginObj.updateReportString);
     }
     else {
-        $('#report_submit').val(ReportPlugin.createReportString);
+        $('#report_submit').val(ReportPluginObj.createReportString);
     }
 
     toggleReportType(report.type);
@@ -36,3 +38,18 @@ function formSetEditReport(idReport) {
 
     $('#report_idreport').val(idReport);
 }
+
+//реальный вызов
+formSetEditReport(idReport,ReportPlugin);
+
+var ReportPluginTest = {
+    'defaultReportType':'type',
+    'defaultReportFormat':'format',
+    'defaultPeriod':'period',
+    'defaultHour':'hour',
+    'updateReportString':'test',
+    'createReportString':'test',
+    'reportList': {}
+}
+// Тестовый вызов
+formSetEditReport(idReport,ReportPluginTest);
