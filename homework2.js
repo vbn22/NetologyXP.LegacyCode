@@ -1,4 +1,18 @@
-function formSetEditReport(idReport) {
+var getToggleReportTypeMethod = function (isTesting) {
+    if (isTesting) {
+        // измененное поведение
+        return function () {
+            console.log('test');
+        }
+    }
+    // не измененное поведение
+    return toggleReportType;
+};
+
+
+
+
+function formSetEditReport(idReport,isTesting) {
     var report = {
         'type': ReportPlugin.defaultReportType,
         'format': ReportPlugin.defaultReportFormat,
@@ -8,6 +22,8 @@ function formSetEditReport(idReport) {
         'reports': []
     };
 
+    var toggleReportType = getToggleReportTypeMethod(isTesting);
+
     if (idReport > 0) {
         report = ReportPlugin.reportList[idReport];
         $('#report_submit').val(ReportPlugin.updateReportString);
@@ -16,6 +32,7 @@ function formSetEditReport(idReport) {
         $('#report_submit').val(ReportPlugin.createReportString);
     }
 
+    // Место шва - заменяем поведения для теста
     toggleReportType(report.type);
 
     $('#report_description').html(report.description);
@@ -36,3 +53,4 @@ function formSetEditReport(idReport) {
 
     $('#report_idreport').val(idReport);
 }
+formSetEditReport();
